@@ -1,0 +1,36 @@
+@page
+@model WebApplication7.Pages.IndexModel
+@{
+    ViewData["Title"] = "HPD Chat";
+}
+
+<h1 class="mb-4">simple chat with semantic Kernel and AOAI </h1>
+
+<div class="chat-container mb-3" style="max-width:600px;margin:auto;">
+    <div class="chat-history border rounded p-3 mb-2" style="height:350px;overflow-y:auto;background:#f8f9fa;">
+        @if (Model.ChatHistory?.Any() == true)
+        {
+            foreach (var message in Model.ChatHistory)
+            {
+                <div class="mb-2 d-flex @(message.Role == "User" ? "justify-content-end" : "justify-content-start")">
+                    <div class="p-2 rounded"
+                         style="max-width:70%;background:@(message.Role == "User" ? "#d1e7dd" : "#e2e3e5");">
+                        <strong>@(message.Role == "User" ? "You" : "Assistant"):</strong>
+                        <span>@message.Content</span>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-muted">No messages yet. Start the conversation!</div>
+        }
+    </div>
+
+    <form method="post" class="d-flex flex-column gap-2">
+        <div class="input-group">
+            <input type="text" name="UserMessage" class="form-control" placeholder="Type your message..." autocomplete="off" />
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+</div>
